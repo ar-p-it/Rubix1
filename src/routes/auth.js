@@ -10,7 +10,7 @@ authRouter.post("/signup", async (req, res) => {
     // validate request body (username, email, password)
     validateSignUpData(req);
 
-    const { username, email, password, displayName, avatarUrl, bio } = req.body;
+    const { username, email, password, displayName, photoUrl, bio } = req.body;
 
     // Check uniqueness for username and email
     const existing = await User.findOne({
@@ -33,7 +33,8 @@ authRouter.post("/signup", async (req, res) => {
       email,
       passwordHash,
       displayName,
-      avatarUrl,
+      // store photoUrl if provided
+      photoUrl,
       bio,
       roles: ["USER"],
     });

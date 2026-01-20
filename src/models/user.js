@@ -45,13 +45,13 @@ const userSchema = new mongoose.Schema(
       maxlength: 80,
     },
 
-    // Optional avatar image URL
-    avatarUrl: {
+    // Optional primary photo URL (preferred over avatarUrl)
+    photoUrl: {
       type: String,
       trim: true,
       validate(value) {
         if (value && !validator.isURL(value))
-          throw new Error("Invalid avatar URL");
+          throw new Error("Invalid photo URL");
       },
     },
 
@@ -62,10 +62,17 @@ const userSchema = new mongoose.Schema(
       maxlength: 280,
     },
 
-    // Token balance used for ticketing (earn/spend)
+    // Legacy token balance (kept for compatibility)
     tokenBalance: {
       type: Number,
       default: 0,
+      min: 0,
+    },
+
+    // New tokens field with default 100
+    tokens: {
+      type: Number,
+      default: 100,
       min: 0,
     },
 

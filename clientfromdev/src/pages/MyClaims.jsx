@@ -36,7 +36,7 @@ const MyClaims = () => {
       });
       setClaims((prev) => prev.filter((c) => c._id !== claimId));
     } catch (err) {
-      alert("Failed to cancel claim.");
+      alert("Failed to cancel claim."+err);
     }
   };
 

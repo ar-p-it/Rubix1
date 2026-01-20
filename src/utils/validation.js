@@ -2,7 +2,7 @@ const validator = require("validator");
 
 // Validate signup for new schema: username, email, password
 const validateSignUpData = (req) => {
-  const { username, email, password, displayName, avatarUrl } = req.body;
+  const { username, email, password, displayName, photoUrl } = req.body;
 
   if (!username || !email || !password) {
     throw new Error("Username, email, and password are required");
@@ -31,8 +31,8 @@ const validateSignUpData = (req) => {
     throw new Error("Display name must be at most 80 characters");
   }
 
-  if (avatarUrl && !validator.isURL(avatarUrl)) {
-    throw new Error("Invalid avatar URL");
+  if (photoUrl && !validator.isURL(photoUrl)) {
+    throw new Error("Invalid photo URL");
   }
 };
 
@@ -41,7 +41,7 @@ const validateEditData = (req) => {
   const allowedFields = [
     "displayName",
     "bio",
-    "avatarUrl",
+    "photoUrl",
     "settings",
     "lastActiveAt",
     "homeLocation",
@@ -68,8 +68,8 @@ const validateEditData = (req) => {
     throw new Error("Bio must be at most 280 characters");
   }
 
-  if (req.body.avatarUrl && !validator.isURL(req.body.avatarUrl)) {
-    throw new Error("Invalid avatar URL");
+  if (req.body.photoUrl && !validator.isURL(req.body.photoUrl)) {
+    throw new Error("Invalid photo URL");
   }
 
   if (req.body.settings) {

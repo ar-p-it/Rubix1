@@ -5,6 +5,7 @@ import { BASE_URL } from "../utils/constants";
 import { removeUser } from "../utils/userSlice";
 const RedditNavbar = () => {
   const user = useSelector((store) => store.user);
+  // console.log(user);
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const handleLogout = async () => {
@@ -17,126 +18,133 @@ const RedditNavbar = () => {
     }
   };
   return (
-    <nav className="h-14 w-full bg-slate-900 flex items-center px-4 text-slate-100">
-      {/* Left */}
-      <div className="flex items-center gap-2 min-w-[150px]">
-        <div className="w-8 h-8 rounded-full bg-gradient-to-br from-indigo-500 to-purple-600 flex items-center justify-center font-bold"></div>
-        <span className="text-xl font-semibold tracking-wide">
-          (Lost:Found)
-        </span>
-      </div>
-
-      {/* Center */}
-      <div className="flex-1 flex justify-center items-center gap-2">
-        <input
-          type="text"
-          placeholder="Search hubs,location"
-          className="w-full max-w-[420px] bg-slate-800 text-slate-100 
-                     placeholder-slate-400 rounded-full py-2 px-4 
-                     outline-none focus:ring-2 focus:ring-indigo-500"
-        />
-
-        <button
-          className="bg-indigo-600 hover:bg-indigo-500 
-                           text-white px-4 py-2 rounded-full 
-                           font-medium transition"
-        >
-          Ask
-        </button>
-      </div>
-
-      {/* Right */}
-      <div className="flex items-center gap-3 min-w-[200px] justify-end">
-        {/* <button className="hover:bg-slate-800 px-3 py-1 rounded-md transition">
-          Create
-        </button> */}
-        <Link to="/create" className="hover:bg-slate-800 px-3 py-1 rounded-md">
-          Create
-        </Link>
-
-        <button className="hover:bg-slate-800 p-2 rounded-full transition">
-          🔔
-        </button>
-
-        {/* <img
-          src={user?.photoUrl || "https://i.pravatar.cc/32"}
-          alt="profile"
-          className="w-8 h-8 rounded-full cursor-pointer border border-slate-700"
-        /> */}
-        <div className="dropdown dropdown-end">
-          <div
-            tabIndex={0}
-            role="button"
-            className="btn btn-ghost gap-2
-            hover:bg-purple-100
-            transition-colors
-            ring-2 ring-purple-300
-            rounded-full px-2"
-          >
-            {/* Profile Image */}
-            <div className="w-10 h-10 rounded-full overflow-hidden">
-              <img
-                src={user?.photoUrl || user?.photoURL || "/default-avatar.png"}
-                alt="Profile"
-                className="w-full h-full object-cover"
-              />
-            </div>
-
-            {/* Welcome text */}
-            {user && (
-              <span className="font-medium text-purple-800">
-                Welcome {user.firstName}
-              </span>
-            )}
+    <nav className="sticky top-0 z-50 w-full bg-white/90 backdrop-blur border-b border-slate-200">
+      <div className="mx-auto max-w-6xl px-4 sm:px-6 lg:px-8">
+        <div className="flex h-16 items-center justify-between gap-3">
+          {/* Left: Brand */}
+          <div className="flex items-center gap-3">
+            <div className="h-9 w-9 rounded-xl bg-gradient-to-br from-indigo-600 to-purple-600 shadow-sm" />
+            <span className="text-lg sm:text-xl font-bold tracking-tight text-slate-900">
+              Lost &amp; Found
+            </span>
           </div>
 
-          {/* USER DROPDOWN MENU */}
-          <ul
-            tabIndex={-1}
-            className="menu menu-sm dropdown-content
-            bg-gradient-to-br from-purple-50 to-pink-50
-            text-gray-800
-            rounded-xl
-            z-50
-            mt-3
-            w-52
-            p-2
-            shadow-2xl
-            border border-purple-200"
+          {/* Center: Nav Links */}
+          {/* <div className="hidden md:flex items-center gap-2">
+            <Link
+              to="/"
+              className="px-3 py-2 text-sm font-medium text-slate-700 rounded-lg hover:bg-slate-100 hover:text-slate-900 transition"
+            >
+              Feed
+            </Link>
+            <Link
+              to="/lost"
+              className="px-3 py-2 text-sm font-medium text-slate-700 rounded-lg hover:bg-slate-100 hover:text-slate-900 transition"
+            >
+              Lost
+            </Link>
+            <Link
+              to="/found"
+              className="px-3 py-2 text-sm font-medium text-slate-700 rounded-lg hover:bg-slate-100 hover:text-slate-900 transition"
+            >
+              Found
+            </Link>
+          </div> */}
+
+          {/* Right: Actions */}
+          <div className="flex items-center gap-2 sm:gap-3">
+            <Link
+              to="/create"
+              className="hidden sm:inline-flex items-center rounded-lg bg-slate-900 text-white px-3 py-2 text-sm font-semibold shadow-sm hover:bg-black transition"
+            >
+              Create
+            </Link>
+
+            <button className="hidden sm:inline-flex items-center justify-center rounded-lg px-3 py-2 text-sm font-medium text-slate-700 hover:bg-slate-100 transition">
+              Feed
+            </button>
+
+            <div className="dropdown dropdown-end">
+              <div
+                tabIndex={0}
+                role="button"
+                className="flex items-center gap-2 rounded-full border border-slate-200 bg-white px-2 py-1.5 shadow-sm hover:bg-slate-50 transition"
+              >
+                <div className="h-9 w-9 rounded-full overflow-hidden ring-2 ring-indigo-200">
+                  <img
+                    src={
+                      user?.photoUrl || user?.photoURL || "/default-avatar.png"
+                    }
+                    alt="Profile"
+                    className="h-full w-full object-cover"
+                  />
+                </div>
+                <span className="hidden sm:inline-block text-sm font-semibold text-slate-800">
+                  {user ? user.username : "Login"}
+                </span>
+              </div>
+
+              <ul
+                tabIndex={-1}
+                className="menu menu-sm dropdown-content bg-white text-slate-800 rounded-xl z-50 mt-3 w-52 p-2 shadow-xl border border-slate-200"
+              >
+                <li>
+                  <Link
+                    to="/profile"
+                    className="rounded-lg hover:bg-slate-100 font-medium"
+                  >
+                    Profile
+                  </Link>
+                </li>
+                <li>
+                  <Link
+                    to="/requests"
+                    className="rounded-lg hover:bg-slate-100 font-medium"
+                  >
+                    Requests
+                  </Link>
+                </li>
+                <li>
+                  <Link
+                    to="/connections"
+                    className="rounded-lg hover:bg-slate-100 font-medium"
+                  >
+                    Connections
+                  </Link>
+                </li>
+                <li>
+                  <a
+                    className="rounded-lg hover:bg-red-50 font-medium text-red-600"
+                    onClick={handleLogout}
+                  >
+                    Logout
+                  </a>
+                </li>
+              </ul>
+            </div>
+          </div>
+        </div>
+
+        {/* Mobile nav */}
+        <div className="md:hidden pb-3 flex items-center gap-2">
+          <Link
+            to="/"
+            className="flex-1 text-center rounded-lg border border-slate-200 px-3 py-2 text-sm font-medium text-slate-700 hover:bg-slate-100 transition"
           >
-            <li>
-              <Link
-                to="/profile"
-                className="rounded-lg hover:bg-purple-100 font-medium"
-              >
-                Profile
-              </Link>
-            </li>{" "}
-            <li>
-              <Link
-                to="/requests"
-                className="rounded-lg hover:bg-purple-100 font-medium"
-              >
-                Requests
-              </Link>
-            </li>
-            <li>
-              <Link
-                to="/connections"
-                className="rounded-lg hover:bg-purple-100 font-medium"
-              >
-                Connections
-              </Link>
-            </li>
-            <li>
-              <a
-                className="rounded-lg hover:bg-red-100 font-medium text-red-600"
-                onClick={handleLogout}
-              >
-                Logout
-              </a>
-            </li>
-          </ul>
+            Feed
+          </Link>
+          <Link
+            to="/lost"
+            className="flex-1 text-center rounded-lg border border-slate-200 px-3 py-2 text-sm font-medium text-slate-700 hover:bg-slate-100 transition"
+          >
+            Lost
+          </Link>
+          <Link
+            to="/found"
+            className="flex-1 text-center rounded-lg border border-slate-200 px-3 py-2 text-sm font-medium text-slate-700 hover:bg-slate-100 transition"
+          >
+            Found
+          </Link>
         </div>
       </div>
     </nav>
