@@ -10,6 +10,7 @@ router.post('/request/:postId', userAuth, upload.single('evidenceImage'), verifi
 
 // 2. Finder Routes (Unchanged)
 router.get('/incoming', userAuth, verificationController.getClaimsForFinder);
+router.get('/my-claims', userAuth, verificationController.getMyClaims);
 router.put('/decision/:claimId', userAuth, verificationController.updateClaimStatus);
 router.delete('/:claimId', userAuth, verificationController.deleteClaim);
 module.exports = router;

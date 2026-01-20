@@ -119,6 +119,22 @@ exports.getClaimsForFinder = async (req, res) => {
   }
 };
 
+// 3b. Get Claims submitted by the logged-in user (claimant)
+exports.getMyClaims = async (req, res) => {
+  try {
+    const userId = req.user._id;
+    const claims = await Claim.find({ claimantId: userId })
+      .populate('postId', 'title description images')
+      .populate('verifierId', 'username email avatarUrl')
+      .sort({ createdAt: -1 });
+
+    return res.json(claims);
+  } catch (error) {
+    console.error('Error fetching my claims:', error);
+    return res.status(500).json({ message: 'Server error fetching my claims' });
+  }
+};
+
 // 4. Update Status (Accept/Reject)
 exports.updateClaimStatus = async (req, res) => {
   try {
